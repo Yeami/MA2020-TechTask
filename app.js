@@ -32,23 +32,26 @@ const calculatePrice = (quantity, price) => quantity * price.substring(1);
 const process = () => {
   let totalPrice = 0;
   let socksAmount = 0;
+  let redHatsAmount = 0;
 
   data.forEach((item) => {
     const quantity = getQuantity(item);
 
     switch (item.type) {
       case ProductType.SOCKS:
-        totalPrice += calculatePrice(quantity, item.priceForPair);
         socksAmount += quantity;
+        totalPrice += calculatePrice(quantity, item.priceForPair);
         break;
       case ProductType.HAT:
+        redHatsAmount += item.color === ProductColor.RED ? quantity : 0;
         totalPrice += calculatePrice(quantity, item.price);
         break;
     }
   });
 
   console.log(`Socks - ${socksAmount} pairs`);
-  console.log(`Total price: $${totalPrice}`);
+  console.log(`Red hats - ${redHatsAmount} items`);
+  console.log(`Total price - $${totalPrice}`);
 }
 
 process();
