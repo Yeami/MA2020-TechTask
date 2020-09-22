@@ -3,6 +3,13 @@ const ProductType = {
     HAT: 'hat',
 };
 
+const ProductColor = {
+    RED: 'red',
+    GREEN: 'green',
+    BLUE: 'blue',
+    WHITE: 'white',
+};
+
 const data = [
   {'type': 'socks', 'color': 'red', 'quantity': 10, 'priceForPair': '$3'},
   {'type': 'socks', 'color': 'green', 'quantity': 5, 'priceForPair': '$10'},
