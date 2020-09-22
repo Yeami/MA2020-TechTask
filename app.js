@@ -1,13 +1,13 @@
 const ProductType = {
-    SOCKS: 'socks',
-    HAT: 'hat',
+  SOCKS: 'socks',
+  HAT: 'hat',
 };
 
 const ProductColor = {
-    RED: 'red',
-    GREEN: 'green',
-    BLUE: 'blue',
-    WHITE: 'white',
+  RED: 'red',
+  GREEN: 'green',
+  BLUE: 'blue',
+  WHITE: 'white',
 };
 
 const data = [
@@ -23,35 +23,49 @@ const data = [
   {'type': 'socks', 'color': 'blue', 'quantity': 2, 'priceForPair': '$6'},
   {'type': 'hat', 'color': 'green', 'quantity': 3, 'price': '$5'},
   {'type': 'hat', 'color': 'red', 'quantity': 1, 'price': '$6'},
-  {'type': 'socks', 'color': 'blue', 'priceForPair': '$6'}
-]
+  {'type': 'socks', 'color': 'blue', 'priceForPair': '$6'},
+];
 
 const getQuantity = (item) => item.quantity ? item.quantity : 0;
+
 const calculatePrice = (quantity, price) => quantity * price.substring(1);
 
+const calculateTotal = (obj) => Object.values(obj).reduce((a, b) => a + b);
+
+const print = (socks, hats, colors) => {
+  console.log(`Socks - ${socks} pairs`);
+  console.log(`Red Hats - ${hats} items`);
+  console.log(`Red - $${colors.red}, Green - $${colors.green}, Blue - $${colors.blue}, White - $${colors.white}`);
+  console.log(`Total price - $${calculateTotal(colors)}`);
+};
+
 const process = () => {
-  let totalPrice = 0;
-  let socksAmount = 0;
-  let redHatsAmount = 0;
+  let socks = 0;
+  let hats = 0;
+
+  const colors = {
+    red: 0,
+    green: 0,
+    blue: 0,
+    white: 0,
+  };
 
   data.forEach((item) => {
     const quantity = getQuantity(item);
 
     switch (item.type) {
       case ProductType.SOCKS:
-        socksAmount += quantity;
-        totalPrice += calculatePrice(quantity, item.priceForPair);
+        socks += quantity;
+        colors[item.color] += calculatePrice(quantity, item.priceForPair);
         break;
       case ProductType.HAT:
-        redHatsAmount += item.color === ProductColor.RED ? quantity : 0;
-        totalPrice += calculatePrice(quantity, item.price);
+        hats += item.color === ProductColor.RED ? quantity : 0;
+        colors[item.color] += calculatePrice(quantity, item.price);
         break;
     }
   });
 
-  console.log(`Socks - ${socksAmount} pairs`);
-  console.log(`Red hats - ${redHatsAmount} items`);
-  console.log(`Total price - $${totalPrice}`);
+  print(socks, hats, colors);
 }
 
 process();
